@@ -57,18 +57,21 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-
-hide_footer = """
+-
+hide_streamlit_branding = """
 <style>
+/* 1. Hides the standard Streamlit footer */
 footer {visibility: hidden;}
-footer:after {
-    content:'';
-    display:block;
-    position:relative;
-    visibility:visible;
-}
+
+/* 2. Hides the 'Hosted with Streamlit' GitHub badge in the bottom right */
+.viewerBadge_container {display: none !important;}
+[data-testid="stViewerBadge"] {display: none !important;}
+
+/* 3. (Optional) Hides the top right hamburger menu if you want a pure app feel */
+/* #MainMenu {visibility: hidden;} */
 </style>
 """
+st.markdown(hide_streamlit_branding, unsafe_allow_html=True)
 
 st.markdown(hide_footer, unsafe_allow_html=True)
 # ════════════════════════════════════════════════════════════════
