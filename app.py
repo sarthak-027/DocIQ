@@ -18,6 +18,7 @@ except ImportError:
 # ════════════════════════════════════════════════════════════════
 # API KEYS — HARDCODED
 # ════════════════════════════════════════════════════════════════
+import streamlit as st
 import os
 import gc
 from pathlib import Path
