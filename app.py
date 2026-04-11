@@ -59,21 +59,25 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-hide_streamlit_branding = """
+st.markdown("""
 <style>
-/* Hides the standard Streamlit footer */
-footer {visibility: hidden !important;}
 
-/* Hides the 'Hosted with Streamlit' and 'Created by' badge */
-.viewerBadge_container {display: none !important;}
-[data-testid="stViewerBadge"] {display: none !important;}
-div[class^="viewerBadge"] {display: none !important;}
+/* Hide Streamlit footer completely */
+footer {display: none !important;}
 
-/* Targets the specific iframe Streamlit injects for that red button */
-iframe[src*="badge"] {display: none !important;}
+/* Hide "Hosted with Streamlit" (bottom right badge) */
+[data-testid="stStatusWidget"] {display: none !important;}
+
+/* Hide top-right decoration (running man icon etc.) */
+[data-testid="stDecoration"] {display: none !important;}
+
+/* Hide ANY fixed bottom bar */
+div[style*="position: fixed"][style*="bottom"] {
+    display: none !important;
+}
+
 </style>
-"""
-st.markdown(hide_streamlit_branding, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 hide_st_style = """
             <style>
