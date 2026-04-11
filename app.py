@@ -59,27 +59,30 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-st.markdown("""
+hide_streamlit_branding = """
 <style>
-/* Hide Streamlit footer */
-footer {visibility: hidden;}
+/* Hides the standard Streamlit footer */
+footer {visibility: hidden !important;}
 
-/* Hide "Hosted with Streamlit" badge */
-[data-testid="stDecoration"] {
-    display: none !important;
-}
+/* Hides the 'Hosted with Streamlit' and 'Created by' badge */
+.viewerBadge_container {display: none !important;}
+[data-testid="stViewerBadge"] {display: none !important;}
+div[class^="viewerBadge"] {display: none !important;}
 
-/* Hide bottom right elements */
-div[data-testid="stStatusWidget"] {
-    display: none !important;
-}
-
-/* Hide your custom footer text if it's part of DOM */
-div:has(> span:contains("Created by")) {
-    display: none !important;
-}
+/* Targets the specific iframe Streamlit injects for that red button */
+iframe[src*="badge"] {display: none !important;}
 </style>
-""", unsafe_allow_html=True)
+"""
+st.markdown(hide_streamlit_branding, unsafe_allow_html=True)
+
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 # ════════════════════════════════════════════════════════════════
 # CUSTOM CSS - LIGHT THEME & SIDEBAR STYLING
 # ════════════════════════════════════════════════════════════════
