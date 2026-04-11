@@ -61,6 +61,14 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+body > div:last-child {
+    display: none !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
 
 /* Hide Streamlit footer completely */
 footer {display: none !important;}
