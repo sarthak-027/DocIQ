@@ -59,31 +59,27 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-hide_st_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
-# 1. Define the CSS block
-hide_streamlit_branding = """
+st.markdown("""
 <style>
-/* 1. Hides the standard Streamlit footer */
+/* Hide Streamlit footer */
 footer {visibility: hidden;}
 
-/* 2. Hides the 'Hosted with Streamlit' GitHub badge in the bottom right */
-.viewerBadge_container {display: none !important;}
-[data-testid="stViewerBadge"] {display: none !important;}
+/* Hide "Hosted with Streamlit" badge */
+[data-testid="stDecoration"] {
+    display: none !important;
+}
 
-/* 3. (Optional) Hides the top right hamburger menu if you want a pure app feel */
-/* #MainMenu {visibility: hidden;} */
+/* Hide bottom right elements */
+div[data-testid="stStatusWidget"] {
+    display: none !important;
+}
+
+/* Hide your custom footer text if it's part of DOM */
+div:has(> span:contains("Created by")) {
+    display: none !important;
+}
 </style>
-"""
-
-# 2. Tell Streamlit to apply it (Notice the names match exactly!)
-st.markdown(hide_streamlit_branding, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 # ════════════════════════════════════════════════════════════════
 # CUSTOM CSS - LIGHT THEME & SIDEBAR STYLING
 # ════════════════════════════════════════════════════════════════
