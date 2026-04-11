@@ -58,21 +58,16 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-hide_streamlit_branding = """
+# 1. Define the variable FIRST
+hide_footer = """
 <style>
-/* 1. Hides the standard Streamlit footer */
 footer {visibility: hidden;}
-
-/* 2. Hides the 'Hosted with Streamlit' GitHub badge in the bottom right */
 .viewerBadge_container {display: none !important;}
 [data-testid="stViewerBadge"] {display: none !important;}
-
-/* 3. (Optional) Hides the top right hamburger menu if you want a pure app feel */
-/* #MainMenu {visibility: hidden;} */
 </style>
 """
-st.markdown(hide_streamlit_branding, unsafe_allow_html=True)
 
+# 2. Then call the variable SECOND
 st.markdown(hide_footer, unsafe_allow_html=True)
 # ════════════════════════════════════════════════════════════════
 # CUSTOM CSS - LIGHT THEME & SIDEBAR STYLING
