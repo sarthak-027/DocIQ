@@ -59,25 +59,30 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-st.markdown("""
+hide_streamlit_branding = """
 <style>
+/* 1. Hide standard footer & hamburger menu */
+footer {visibility: hidden !important;}
+#MainMenu {visibility: hidden !important;}
 
-/* Hide Streamlit footer completely */
-footer {display: none !important;}
+/* 2. Hide desktop viewer badges */
+.viewerBadge_container {display: none !important;}
+[data-testid="stViewerBadge"] {display: none !important;}
+[data-testid="stAppDeployButton"] {display: none !important;}
 
-/* Hide "Hosted with Streamlit" (bottom right badge) */
-[data-testid="stStatusWidget"] {display: none !important;}
-
-/* Hide top-right decoration (running man icon etc.) */
-[data-testid="stDecoration"] {display: none !important;}
-
-/* Hide ANY fixed bottom bar */
-div[style*="position: fixed"][style*="bottom"] {
-    display: none !important;
+/* 3. MOBILE SPECIFIC NUKE */
+@media (max-width: 768px) {
+    /* Target the exact iframe Streamlit injects on mobile */
+    iframe[title*="streamlit"] {display: none !important;}
+    iframe[src*="badge"] {display: none !important;}
+    
+    /* Target the floating mobile container */
+    div[class^="viewerBadge"] {display: none !important;}
+    .viewerBadge_link {display: none !important;}
 }
-
 </style>
-""", unsafe_allow_html=True)
+"""
+st.markdown(hide_streamlit_branding, unsafe_allow_html=True)
 
 hide_st_style = """
             <style>
