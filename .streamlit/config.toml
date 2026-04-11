@@ -1,0 +1,16 @@
+[theme]
+# Force the base theme to be light
+base="light"
+
+# DocIQ Primary Accents
+primaryColor="#4f46e5"
+
+# Background colors to match our CSS
+backgroundColor="#f8fafc"
+secondaryBackgroundColor="#ffffff"
+
+# Text color
+textColor="#0f172a"
+
+# Font
+font="sans serif"
