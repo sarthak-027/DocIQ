@@ -58,6 +58,19 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+hide_footer = """
+<style>
+footer {visibility: hidden;}
+footer:after {
+    content:'';
+    display:block;
+    position:relative;
+    visibility:visible;
+}
+</style>
+"""
+
+st.markdown(hide_footer, unsafe_allow_html=True)
 # ════════════════════════════════════════════════════════════════
 # CUSTOM CSS - LIGHT THEME & SIDEBAR STYLING
 # ════════════════════════════════════════════════════════════════
