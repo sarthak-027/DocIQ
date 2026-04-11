@@ -9,4 +9,4 @@ plotly==5.18.0
 duckduckgo-search==4.4.3
 google-generativeai==0.4.0
 python-dotenv==1.0.1
-pysqlite3-binary==0.4.7
+pysqlite3-binary
