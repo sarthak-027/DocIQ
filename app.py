@@ -18,18 +18,17 @@ except ImportError:
 # ════════════════════════════════════════════════════════════════
 # API KEYS — HARDCODED
 # ════════════════════════════════════════════════════════════════
-import streamlit as st
 import os
 import gc
 from pathlib import Path
+import streamlit as st
 
 # Paste your API keys directly here
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-
 # ════════════════════════════════════════════════════════════════
 
-import streamlit as st
+
 import re, json, time, hashlib, tempfile, string
 from datetime import datetime
 from collections import Counter
@@ -52,7 +51,7 @@ except ImportError:
 # PAGE CONFIG 
 # ════════════════════════════════════════════════════════════════
 st.set_page_config(
-    page_title="DocIQ — Document Intelligence",
+    page_title="DocIQ - Document Intelligence",
     page_icon="D",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -76,8 +75,12 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 .stApp { background: var(--background-color); color: var(--text-color); }
 [data-testid="stSidebar"] { background: var(--secondary-background-color) !important; border-right: 1px solid #e2e8f0; }
 
-/* LOCK SIDEBAR OPEN */
-[data-testid="collapsedControl"], [data-testid="stSidebarCollapseButton"] { display: none !important; }
+/* LOCK SIDEBAR OPEN & REMOVE CLOSE OPTIONS */
+[data-testid="collapsedControl"], 
+[data-testid="stSidebarCollapseButton"],
+button[aria-label="Close"] { 
+    display: none !important; 
+}
 #MainMenu, footer { visibility: hidden; }
 
 /* --- SIDEBAR NAVIGATION UI FIXES --- */
@@ -97,32 +100,17 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2) !important;
 }
 /* Secondary (Inactive) Nav Button */
-[data-testid="stSidebar"] [data-testid="column"]:nth-of-type(1) button[kind="secondary"] {
+[data-testid="stSidebar"] button[kind="secondary"] {
     background: transparent !important;
     color: #475569 !important;
     border: 1px solid transparent !important;
     text-align: left !important;
     padding-left: 16px !important;
 }
-[data-testid="stSidebar"] [data-testid="column"]:nth-of-type(1) button[kind="secondary"]:hover {
+[data-testid="stSidebar"] button[kind="secondary"]:hover {
     background: #f1f5f9 !important;
     color: #0f172a !important;
 }
-/* Small Delete 'X' Buttons */
-[data-testid="stSidebar"] [data-testid="column"]:nth-of-type(2) button {
-    background: transparent !important;
-    color: #94a3b8 !important;
-    border: none !important;
-    padding: 0 !important;
-    min-height: 40px;
-    box-shadow: none !important;
-}
-[data-testid="stSidebar"] [data-testid="column"]:nth-of-type(2) button:hover {
-    color: #ef4444 !important;
-    background: #fee2e2 !important;
-    border-radius: 50%;
-}
-
 
 /* Tabs */
 .stTabs [data-baseweb="tab-list"] { background: #ffffff; border-radius: 12px; padding: 4px; gap: 4px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
@@ -417,7 +405,7 @@ def dna_radar(dna_data: dict) -> go.Figure:
 
     for idx, (fname, dna) in enumerate(dna_data.items()):
         vals = [dna.get(c, 0) for c in cats] + [dna.get(cats[0], 0)]
-        fig.add_trace(go.Scatterpolar(r=vals, theta=cats + [cats[0]], fill='toself', name=(fname[:20]+"…") if len(fname)>23 else fname, line=dict(color=colors[idx%len(colors)], width=2), fillcolor=hex_to_rgba(colors[idx%len(colors)], 0.15)))
+        fig.add_trace(go.Scatterpolar(r=vals, theta=cats + [cats[0]], fill='toself', name=(fname[:20]+"...") if len(fname)>23 else fname, line=dict(color=colors[idx%len(colors)], width=2), fillcolor=hex_to_rgba(colors[idx%len(colors)], 0.15)))
 
     fig.update_layout(polar=dict(bgcolor="#ffffff", radialaxis=dict(visible=True, range=[0,100], gridcolor="#e2e8f0", tickfont=dict(color="#64748b", size=9)), angularaxis=dict(gridcolor="#e2e8f0", tickfont=dict(color="#0f172a", size=10))), paper_bgcolor="#f8fafc", plot_bgcolor="#ffffff", font=dict(color="#0f172a", family="Inter"), legend=dict(bgcolor="#ffffff", bordercolor="#e2e8f0", borderwidth=1), margin=dict(l=40, r=40, t=40, b=40), height=420)
     return fig
@@ -666,25 +654,15 @@ def main():
                 
             for fname in active_pdfs:
                 is_active = (fname == st.session_state.active_pdf)
+                btn_type = "primary" if is_active else "secondary"
                 
-                col1, col2 = st.columns([5, 1])
-                
-                with col1:
-                    btn_type = "primary" if is_active else "secondary"
-                    if st.button(fname, key=f"nav_{fname}", type=btn_type, use_container_width=True):
-                        st.session_state.active_pdf = fname
-                        st.rerun()
-                
-                with col2:
-                    if st.button("X", key=f"del_{fname}", help=f"Remove {fname}"):
-                        st.session_state.pdf_store[fname]["removed"] = True
-                        if st.session_state.active_pdf == fname:
-                            st.session_state.active_pdf = None
-                        st.rerun()
+                if st.button(fname, key=f"nav_{fname}", type=btn_type, use_container_width=True):
+                    st.session_state.active_pdf = fname
+                    st.rerun()
 
     # --- MAIN VIEW ---
     if not GROQ_API_KEY:
-        st.warning("[Warning] **No API key found.** Please add your Groq API key directly to the GROQ_API_KEY variable at the top of app.py.")
+        st.warning("[Warning] No API key found. Please add your Groq API key directly to the GROQ_API_KEY variable at the top of app.py.")
 
     if not st.session_state.active_pdf:
         st.markdown(
