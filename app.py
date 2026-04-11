@@ -57,7 +57,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
--
+
 hide_streamlit_branding = """
 <style>
 /* 1. Hides the standard Streamlit footer */
