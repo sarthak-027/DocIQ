@@ -48,9 +48,7 @@ try:
 except ImportError:
     GEMINI_OK = False
 
-# ════════════════════════════════════════════════════════════════
-# PAGE CONFIG 
-# ════════════════════════════════════════════════════════════════
+
 # ════════════════════════════════════════════════════════════════
 # PAGE CONFIG 
 # ════════════════════════════════════════════════════════════════
@@ -61,6 +59,14 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 # 1. Define the CSS block
 hide_streamlit_branding = """
 <style>
